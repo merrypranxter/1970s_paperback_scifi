@@ -1,0 +1,39 @@
+{
+  "repo": "1970s_paperback_scifi",
+  "type": "style_reference",
+  "aesthetic_category": "illustration_movement",
+  "subcategories": ["science_fiction", "airbrush", "chrome", "space_art", "golden_age_sf"],
+  "era": "1970-1985",
+  "references": ["Chris Foss", "John Berkey", "Peter Elson", "Bob Pepper"],
+  "color_palettes": {
+    "FOSS_CHROME": ["#C0C0C0", "#FF8C00", "#1C1C5E", "#FF4500", "#FFD700"],
+    "BERKEY_WARM": ["#8B4513", "#DAA520", "#1C1C1C", "#FF6347"],
+    "GAS_GIANT": ["#DAA520", "#CD853F", "#8B4513", "#DEB887", "#F5DEB3"],
+    "DEEP_SPACE": ["#000010", "#191970", "#C0C0C0", "#FF6B35"],
+    "SUNRISE_CHROME": ["#FF4500", "#FF8C00", "#FFD700", "#FFFACD", "#C0C0C0"]
+  },
+  "regimes": [
+    "FOSS_FLAGSHIP",
+    "BERKEY_EPIC",
+    "GAS_GIANT_ENCOUNTER",
+    "DEEP_SPACE_TRANSIT",
+    "DOCKING_SEQUENCE",
+    "SUNRISE_CHROME",
+    "FLEET_FORMATION",
+    "ORBITAL_APPROACH"
+  ],
+  "shaders": [
+    "src/shaders/foss_flagship.frag.glsl",
+    "src/shaders/berkey_epic.frag.glsl",
+    "src/shaders/gas_giant_encounter.frag.glsl",
+    "src/shaders/deep_space_transit.frag.glsl",
+    "src/shaders/docking_sequence.frag.glsl",
+    "src/shaders/sunrise_chrome.frag.glsl",
+    "src/shaders/fleet_formation.frag.glsl",
+    "src/shaders/orbital_approach.frag.glsl"
+  ],
+  "pipeline_role": "context_source",
+  "compatible_with": ["retrofuturism", "holography", "structural_color", "accretion_disk", "nebula_formation"],
+  "reposcripter2": true,
+  "shaderforge": true
+}

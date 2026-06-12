@@ -1,0 +1,29 @@
+REPO: 1970s_paperback_scifi
+PURPOSE: 1970s-80s SF cover art visual grammar — Chris Foss chrome ships, airbrush space, impossible scale
+STACK: Three.js + WebGL2 + GLSL + Vite
+
+CORE MATH:
+- Chrome BRDF: Cook-Torrance GGX, roughness 0.05–0.15, F0=vec3(0.95,0.93,0.88) (silver-chrome)
+- Racing stripe: fract(dot(surface_uv, stripe_dir) * stripe_freq) < stripe_width
+- Airbrush gradient: smoothstep on luminance with wide knee (0.2–0.8 range), no clipping
+- Gas giant bands: fbm(vec2(uv.x * 20.0, time * 0.01)) for band wobble; hue shift per band
+- Specular smear: anisotropic specular along hull long axis, wide lobe
+- Atmosphere haze: exp(-distance * haze_density) * haze_color for large objects
+- Exhaust plume: cone SDF + noise displacement + HDR bloom kernel
+
+PALETTES:
+- FOSS_CHROME: #C0C0C0, #FF8C00, #1C1C5E, #FF4500, #FFD700
+- BERKEY_WARM: #8B4513, #DAA520, #1C1C1C, #FF6347
+- GAS_GIANT: #DAA520, #CD853F, #8B4513, #DEB887, #F5DEB3
+- DEEP_SPACE: #000010, #191970, #C0C0C0, #FF6B35
+- SUNRISE_CHROME: #FF4500, #FF8C00, #FFD700, #FFFACD, #C0C0C0
+
+REGIMES:
+- FOSS_FLAGSHIP: chrome ships with racing stripes, fleet scale, warm/cold contrast
+- BERKEY_EPIC: single massive ship, amber light, escort ships for scale
+- GAS_GIANT_ENCOUNTER: planet fills 50–70% of frame, ring system, moon shadow
+- DEEP_SPACE_TRANSIT: near-black space, sparse stars, exhaust glow dominant
+- DOCKING_SEQUENCE: interior lights + approaching ship, civilization-scale engineering
+- SUNRISE_CHROME: ships in full orange sunrise, chrome blazing, star off-frame
+- FLEET_FORMATION: five-ship formation, parallel exhaust trails, racing stripe livery
+- ORBITAL_APPROACH: terminator arc, atmosphere limb glow, city grid below clouds
