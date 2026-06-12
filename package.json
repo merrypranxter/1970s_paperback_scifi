@@ -1,0 +1,24 @@
+{
+  "name": "1970s_paperback_scifi",
+  "version": "0.1.0",
+  "description": "Generative art style reference for 1970s_paperback_scifi",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "three": "^0.160.0"
+  },
+  "keywords": [
+    "generative-art",
+    "shader",
+    "webgl",
+    "glsl",
+    "style-reference"
+  ],
+  "author": "merrypranxter",
+  "license": "MIT"
+}

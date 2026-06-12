@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1970s Paperback Sci-Fi — Shader Gallery</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #000010;
+      color: #c0c0c0;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 12px;
+      overflow: hidden;
+    }
+
+    #canvas-container {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    }
+
+    #canvas-container canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    /* ── Sidebar ── */
+    #sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 260px;
+      height: 100vh;
+      background: rgba(0, 0, 16, 0.82);
+      border-left: 1px solid rgba(192, 192, 192, 0.15);
+      backdrop-filter: blur(6px);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease;
+      overflow: hidden;
+    }
+
+    #sidebar.collapsed {
+      transform: translateX(260px);
+    }
+
+    #sidebar-header {
+      padding: 14px 16px 10px;
+      border-bottom: 1px solid rgba(192,192,192,0.12);
+      flex-shrink: 0;
+    }
+
+    #sidebar-header h1 {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: #ff8c00;
+      text-transform: uppercase;
+    }
+
+    #current-regime {
+      font-size: 14px;
+      font-weight: bold;
+      color: #ffd700;
+      margin-top: 4px;
+      display: block;
+    }
+
+    #hint {
+      font-size: 10px;
+      color: #555;
+      margin-top: 3px;
+    }
+
+    /* ── Regime list ── */
+    #regime-section {
+      padding: 10px 16px 6px;
+      border-bottom: 1px solid rgba(192,192,192,0.10);
+      flex-shrink: 0;
+    }
+
+    #regime-section h2 {
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: #888;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    #regime-list {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .regime-btn {
+      background: transparent;
+      border: 1px solid rgba(192,192,192,0.18);
+      color: #a0a0a8;
+      padding: 5px 8px;
+      font-family: inherit;
+      font-size: 11px;
+      cursor: pointer;
+      text-align: left;
+      letter-spacing: 0.04em;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+
+    .regime-btn:hover {
+      background: rgba(255, 140, 0, 0.12);
+      border-color: #ff8c00;
+      color: #ffd700;
+    }
+
+    .regime-btn.active {
+      background: rgba(255, 215, 0, 0.12);
+      border-color: #ffd700;
+      color: #ffd700;
+    }
+
+    /* ── Params ── */
+    #params-section {
+      padding: 10px 16px;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    #params-section h2 {
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: #888;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .param-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .param-row label {
+      font-size: 10px;
+      color: #909090;
+      letter-spacing: 0.04em;
+    }
+
+    .param-row input[type='range'] {
+      width: 90px;
+      accent-color: #ff8c00;
+      cursor: pointer;
+    }
+
+    .param-row span {
+      font-size: 10px;
+      color: #ffd700;
+      min-width: 36px;
+      text-align: right;
+    }
+
+    /* ── Toggle button (always visible) ── */
+    #toggle-sidebar {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      z-index: 20;
+      background: rgba(0, 0, 16, 0.75);
+      border: 1px solid rgba(192,192,192,0.25);
+      color: #ff8c00;
+      font-family: inherit;
+      font-size: 11px;
+      padding: 5px 10px;
+      cursor: pointer;
+      letter-spacing: 0.06em;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    #toggle-sidebar:hover {
+      color: #ffd700;
+      border-color: #ffd700;
+    }
+
+    /* ── Bottom nav hint ── */
+    #bottom-hint {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 16, 0.65);
+      border: 1px solid rgba(192,192,192,0.12);
+      padding: 4px 12px;
+      font-size: 10px;
+      color: #505060;
+      letter-spacing: 0.06em;
+      z-index: 10;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+
+  <button id="toggle-sidebar">☰ CONTROLS</button>
+
+  <aside id="sidebar">
+    <div id="sidebar-header">
+      <h1>1970s Paperback Sci-Fi</h1>
+      <span id="current-regime">—</span>
+      <div id="hint">← → keys to cycle regimes</div>
+    </div>
+
+    <div id="regime-section">
+      <h2>Aesthetic Regime</h2>
+      <div id="regime-list"></div>
+    </div>
+
+    <div id="params-section">
+      <h2>Shader Parameters</h2>
+      <div id="params"></div>
+    </div>
+  </aside>
+
+  <div id="bottom-hint">CHROME SHIPS · IMPOSSIBLE SCALE · AIRBRUSH VOID</div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
